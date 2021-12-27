@@ -8,7 +8,7 @@ let particleArray = [];
 const mouse = {
     x: null,
     y: null,
-    radius: 120
+    radius: 100
 };
 
 window.addEventListener('mousemove', function(event){
@@ -22,13 +22,13 @@ window.addEventListener('touchmove', function(event){
 })
 
 const textImage = {
-    width: 100,
-    height: 100
+    width: 120,
+    height: 120
 };
 
 context.fillStyle = 'white';
 context.font = '30px Courier New';
-context.fillText('Vy', 30, 60);
+context.fillText('Vy', 40, 65);
 context.strokeStyle = 'white';
 context.strokeRect(0, 0, textImage.width, textImage.height);
 const textData = context.getImageData(0, 0, textImage.width, textImage.height);
@@ -90,7 +90,7 @@ function init(){
             }else{
                 const particleX = x * (window.innerWidth/textImage.width);
                 const particleY = y * (window.innerHeight/textImage.height);
-                particleArray.push(new Particle(particleX, particleY, 'black'));
+                particleArray.push(new Particle(particleX, particleY, 'white'));
             }
         }
     }
