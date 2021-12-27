@@ -16,6 +16,11 @@ window.addEventListener('mousemove', function(event){
     mouse.y = event.y;
 })
 
+window.addEventListener('touchmove', function(event){
+    mouse.x = event.changedTouches[0].clientX;
+    mouse.y = event.changedTouches[0].clientY;
+})
+
 const textImage = {
     width: 100,
     height: 100
