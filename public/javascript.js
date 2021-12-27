@@ -28,7 +28,7 @@ const textImage = {
 
 context.fillStyle = 'white';
 context.font = '30px Courier New';
-context.fillText('Vy', 30, 55);
+context.fillText('Vy', 30, 60);
 context.strokeStyle = 'white';
 context.strokeRect(0, 0, textImage.width, textImage.height);
 const textData = context.getImageData(0, 0, textImage.width, textImage.height);
@@ -84,13 +84,13 @@ function init(){
     for(let y = 0; y < textData.height; y++){
         for(let x = 0; x < textData.width; x++){
             if(textData.data[(y * 4 * textData.width) + (x * 4 + 3)] >= 128){
-                const particleX = x * 5;
-                const particleY = y * 5;
+                const particleX = x * (window.innerWidth/textImage.width);
+                const particleY = y * (window.innerHeight/textImage.height);
                 particleArray.push(new Particle(particleX, particleY, 'red'));
             }else{
-                const particleX = x * 5;
-                const particleY = y * 5;
-                particleArray.push(new Particle(particleX, particleY, 'white'));
+                const particleX = x * (window.innerWidth/textImage.width);
+                const particleY = y * (window.innerHeight/textImage.height);
+                particleArray.push(new Particle(particleX, particleY, 'black'));
             }
         }
     }

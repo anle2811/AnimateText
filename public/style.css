@@ -1,16 +1,17 @@
+body {
+    background: black;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    background: black;
-    overflow: hidden;
-}
-
 #canvas2 {
+    position: absolute;
     top: 0;
     left: 0;
-    position: absolute;
 }
