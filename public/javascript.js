@@ -11,7 +11,7 @@ vyImage.src = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4R1TRXhpZgAATU
 const mouse = {
     x: null,
     y: null,
-    radius: 100
+    radius: 110
 };
 
 window.addEventListener('mousemove', function(event){
@@ -54,7 +54,7 @@ class Particle{
     constructor(x, y, color){
         this.x = x;
         this.y = y;
-        this.size = 4;
+        this.size = 10;
         this.baseX = x;
         this.baseY = y;
         this.density = (Math.random() * 30) + 1;
