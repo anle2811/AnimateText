@@ -26,6 +26,7 @@ window.addEventListener('mousemove', function(event){
 window.addEventListener('touchmove', function(event){
     mouse.x = event.changedTouches[0].clientX;
     mouse.y = event.changedTouches[0].clientY;
+    particleOnMouse(event);
 })
 
 const textImage = {
@@ -210,7 +211,7 @@ function connectParticleMouse(){
             const dx = particleMouseArray[pA].x - particleMouseArray[pB].x;
             const dy = particleMouseArray[pA].y - particleMouseArray[pB].y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            if(distance < 30){
+            if(distance < 40){
                 context.beginPath();
                 context.strokeStyle = particleMouseArray[pA].color;
                 context.lineWidth = 0.5;
