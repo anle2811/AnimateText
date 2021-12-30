@@ -1,6 +1,7 @@
 body {
     background: black;
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    color: white;
     overflow: hidden;
 }
 
@@ -15,3 +16,25 @@ body {
     top: 0;
     left: 0;
 }
+
+/*#eyes {
+    position: relative;
+    left: 20px;
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+    border: 3px solid red;
+}
+
+#rightEye {
+    align-self: center;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+}
+
+#leftEye {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+}*/
