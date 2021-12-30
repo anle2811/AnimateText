@@ -20,13 +20,13 @@ let canvasData = null;
 window.addEventListener('mousemove', function(event){
     mouse.x = event.x;
     mouse.y = event.y;
-    particleOnMouse(event);
+    particleOnMouse(event.x, event.y);
 })
 
 window.addEventListener('touchmove', function(event){
     mouse.x = event.changedTouches[0].clientX;
     mouse.y = event.changedTouches[0].clientY;
-    particleOnMouse(event);
+    particleOnMouse(event.changedTouches[0].clientX, event.changedTouches[0].clientY);
 })
 
 const textImage = {
@@ -47,9 +47,9 @@ function drawImage(){
     canvasData = context.getImageData(0, 0, textImage.width, textImage.height);
 }
 
-function particleOnMouse(event){
+function particleOnMouse(x, y){
     for(let i = 0; i < 5; i++){
-        particleMouseArray.push(new ParticleMouse(event.x, event.y));
+        particleMouseArray.push(new ParticleMouse(x, y));
     }
 }
 
@@ -60,6 +60,7 @@ class ParticleMouse{
         this.y = y;
         this.baseX = this.x;
         this.baseY = this.y;
+        this.negaOrPosi = 1;
         this.size = Math.random() * 10 + 2;
         this.baseSize = this.size;
         this.speedX = Math.random() * 3 - 1.5;
@@ -90,9 +91,9 @@ class ParticleMouse{
             this.hue += 5;
         }*/
         context.fillStyle = 'hsl(' + this.hue + ', 100%, 50%)';
-        this.size -= 0.1;
-        this.x += this.speedX;
-        this.y += this.speedY;
+        this.size -= (0.2 * this.negaOrPosi);
+        this.x += (this.speedX * this.negaOrPosi);
+        this.y += (this.speedY * this.negaOrPosi);
     }
 }
 
@@ -211,7 +212,7 @@ function connectParticleMouse(){
             const dx = particleMouseArray[pA].x - particleMouseArray[pB].x;
             const dy = particleMouseArray[pA].y - particleMouseArray[pB].y;
             const distance = Math.sqrt(dx * dx + dy * dy);
-            if(distance < 40){
+            if(distance < 30){
                 context.beginPath();
                 context.strokeStyle = particleMouseArray[pA].color;
                 context.lineWidth = 0.5;
@@ -242,20 +243,18 @@ function particleMouseAnimate(){
     context.clearRect(0, 0, window.innerWidth, window.innerHeight);
     for(let i = 0; i < particleMouseArray.length; i++){
         if(particleMouseArray[i].size <= 0){
-            particleMouseArray[i].size = particleMouseArray[i].baseSize;
-            particleMouseArray[i].x *= -1;
-            particleMouseArray[i].y *= -1;
+            //particleMouseArray[i].size = 1;
+            particleMouseArray[i].negaOrPosi = -1;
             //particleMouseArray.splice(i, 1);
             //i--;
-        }else{
-            particleMouseArray[i].draw();
-            particleMouseArray[i].update();
         }
-        if(particleMouseArray[i].x == particleMouseArray[i].baseX && 
-            particleMouseArray[i].y == particleMouseArray[i].baseY){
-                particleMouseArray[i].x *= 1;
-                particleMouseArray[i].y *= 1;
-            }
+        if(particleMouseArray[i].size > 0){
+            particleMouseArray[i].draw();
+        }
+        particleMouseArray[i].update();
+        if(particleMouseArray[i].size >= particleMouseArray[i].baseSize){
+                particleMouseArray[i].negaOrPosi = 1;
+        }
     }
     hue += 3;
     connectParticleMouse();
