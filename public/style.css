@@ -3,6 +3,7 @@ body {
     font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
     color: white;
     overflow: hidden;
+    position: relative;
 }
 
 * {
@@ -11,11 +12,7 @@ body {
     box-sizing: border-box;
 }
 
-#canvas2 {
-    position: absolute;
-    top: 0;
-    left: 0;
-}
+
 
 /*#eyes {
     position: relative;
