@@ -90,11 +90,12 @@ paintLayer.addEventListener('touchstart', event =>{
 
 paintLayer.addEventListener('touchmove', event =>{
     event.preventDefault();
+    event.stopPropagation();
     if(picFrameDragable){
         picFrame.style.left = (event.changedTouches[0].pageX - picFrameMouse.x) + 'px';
     }else{
-        mouseCoor.x = event.changedTouches[0].pageX;
-        mouseCoor.y = event.changedTouches[0].pageY;
+        mouseCoor.x = event.touches[0].pageX;
+        mouseCoor.y = event.touches[0].pageY;
         const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
         lineArr.push(newLine);
         //newLine.draw();
