@@ -7,7 +7,11 @@
     </head>
     <body>
         <canvas id="mainLayer" style="z-index: 0;"></canvas>
-        <canvas id="paintLayer" style="z-index: 1;"></canvas>
+        <div id="drawingArea" style="z-index: 1;">
+            <canvas id="paintLayer" style="z-index: 0;"></canvas>
+            <canvas id="picFrame" style="z-index: 1;"></canvas>
+        </div>
+        <button id="paintDone" onclick="paintDone()" style="z-index: 2;">DONE</button>
         <script src="./public/javascript1.js" style="text/javascript"></script>
     </body>
 </html>
