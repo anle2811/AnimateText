@@ -44,18 +44,18 @@ picFrame.addEventListener('mousedown', e =>{
     picFrameDragable = true;
     picFrameMouse.x = e.offsetX;
     picFrameMouse.y = e.offsetY;
-});
+}, false);
 picFrame.addEventListener('touchstart', e =>{
     picFrameDragable = true;
     picFrameMouse.x = e.touches[0].clientX;
     picFrameMouse.y = e.touches[0].clientY;
-});
+}, false);
 picFrame.addEventListener('touchend', e =>{
     picFrameDragable = false;
-});
+}, false);
 picFrame.addEventListener('mouseup', e =>{
     picFrameDragable = false;
-});
+}, false);
 
 let lineArr = [];
 const mouseCoor = {
@@ -72,7 +72,7 @@ paintLayer.addEventListener('mousedown', event =>{
     const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
     lineArr.push(newLine);
     newLine.draw();
-});
+}, false);
 
 paintLayer.addEventListener('touchstart', event =>{
     isDrawing = true;
@@ -81,7 +81,7 @@ paintLayer.addEventListener('touchstart', event =>{
     const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
     lineArr.push(newLine);
     newLine.draw();
-});
+}, false);
 
 paintLayer.addEventListener('touchmove', event =>{
     if(isDrawing){
@@ -94,7 +94,7 @@ paintLayer.addEventListener('touchmove', event =>{
     if(picFrameDragable){
         picFrame.style.left = (event.changedTouches[0].clientX - picFrameMouse.x) + 'px';
     }
-});
+}, false);
 
 paintLayer.addEventListener('mousemove', event =>{
     if(isDrawing){
@@ -107,19 +107,19 @@ paintLayer.addEventListener('mousemove', event =>{
     if(picFrameDragable){
         picFrame.style.left = (event.offsetX - picFrameMouse.x) + 'px';
     }
-});
+}, false);
 
 paintLayer.addEventListener('mouseup', event =>{
     isDrawing = false;
     mouseCoor.x = 0;
     mouseCoor.y = 0;
-});
+}, false);
 
 paintLayer.addEventListener('touchend', e =>{
     isDrawing = false;
     mouseCoor.x = 0;
     mouseCoor.y = 0;
-});
+}, false);
 
 function paintLayerFindMaxY(){
     let biggest = 0;
