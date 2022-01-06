@@ -47,11 +47,13 @@ picFrame.addEventListener('mousedown', e =>{
 }, false);
 picFrame.addEventListener('touchstart', e =>{
     picFrameDragable = true;
-    picFrameMouse.x = e.touches[0].clientX;
-    picFrameMouse.y = e.touches[0].clientY;
+    picFrameMouse.x = e.touches[0].pageX;
+    picFrameMouse.y = e.touches[0].pageY;
+    e.preventDefault();
 }, false);
 picFrame.addEventListener('touchend', e =>{
     picFrameDragable = false;
+    e.preventDefault();
 }, false);
 picFrame.addEventListener('mouseup', e =>{
     picFrameDragable = false;
@@ -75,19 +77,20 @@ paintLayer.addEventListener('mousedown', event =>{
 }, false);
 
 paintLayer.addEventListener('touchstart', event =>{
-    mouseCoor.x = event.touches[0].clientX;
-    mouseCoor.y = event.touches[0].clientY;
+    mouseCoor.x = event.touches[0].pageX;
+    mouseCoor.y = event.touches[0].pageY;
     const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
     lineArr.push(newLine);
     newLine.draw();
 }, false);
 
 paintLayer.addEventListener('touchmove', event =>{
+    event.preventDefault();
     if(picFrameDragable){
-        picFrame.style.left = (event.changedTouches[0].clientX - picFrameMouse.x) + 'px';
+        picFrame.style.left = (event.changedTouches[0].pageX - picFrameMouse.x) + 'px';
     }else{
-        mouseCoor.x = event.changedTouches[0].clientX;
-        mouseCoor.y = event.changedTouches[0].clientY;
+        mouseCoor.x = event.changedTouches[0].pageX;
+        mouseCoor.y = event.changedTouches[0].pageY;
         const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
         lineArr.push(newLine);
         newLine.draw();
