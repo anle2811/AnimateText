@@ -28,9 +28,13 @@ picFrame.style.position = 'absolute';
 const doneBtn = document.getElementById('paintDone');
 doneBtn.style.top = (window.innerHeight/4 + paintLayer.height + paintLayer.height/2)+'px';
 doneBtn.style.position = 'absolute';
+
+var requestId;
 function paintDone(){
     //pullRightPlace();
     //paintLayer.style.top = '100px';
+    window.cancelAnimationFrame(requestId);
+    requestId = undefined;
     drawPicFrame();
     repaintToPicFrame();
     picFrame.style.top = (paintLayer.height - picFrame.height) + 'px';
@@ -67,24 +71,24 @@ const mouseCoor = {
 let isDrawing = false;
 let penPixelSize = 5;
 
-drawingArea.addEventListener('mousedown', event =>{
+paintLayer.addEventListener('mousedown', event =>{
     isDrawing = true;
     mouseCoor.x = event.offsetX;
     mouseCoor.y = event.offsetY;
     const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
     lineArr.push(newLine);
-    newLine.draw();
+    //newLine.draw();
 }, false);
 
-/*drawingArea.addEventListener('touchstart', event =>{
+paintLayer.addEventListener('touchstart', event =>{
     mouseCoor.x = event.touches[0].pageX;
     mouseCoor.y = event.touches[0].pageY;
     const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
     lineArr.push(newLine);
-    newLine.draw();
-}, false);*/
+    //newLine.draw();
+}, false);
 
-drawingArea.addEventListener('touchmove', event =>{
+paintLayer.addEventListener('touchmove', event =>{
     event.preventDefault();
     if(picFrameDragable){
         picFrame.style.left = (event.changedTouches[0].pageX - picFrameMouse.x) + 'px';
@@ -93,24 +97,25 @@ drawingArea.addEventListener('touchmove', event =>{
         mouseCoor.y = event.changedTouches[0].pageY;
         const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
         lineArr.push(newLine);
-        newLine.draw();
+        //newLine.draw();
     }
 }, false);
 
-drawingArea.addEventListener('mousemove', event =>{
-    if(isDrawing){
-        mouseCoor.x = event.offsetX;
-        mouseCoor.y = event.offsetY;
-        const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
-        lineArr.push(newLine);
-        newLine.draw();
-    }
+paintLayer.addEventListener('mousemove', event =>{
     if(picFrameDragable){
         picFrame.style.left = (event.offsetX - picFrameMouse.x) + 'px';
+    }else{
+        if(isDrawing){
+            mouseCoor.x = event.offsetX;
+            mouseCoor.y = event.offsetY;
+            const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
+            lineArr.push(newLine);
+            //newLine.draw();
+        }
     }
 }, false);
 
-drawingArea.addEventListener('mouseup', event =>{
+paintLayer.addEventListener('mouseup', event =>{
     isDrawing = false;
     mouseCoor.x = 0;
     mouseCoor.y = 0;
@@ -121,6 +126,18 @@ drawingArea.addEventListener('mouseup', event =>{
     mouseCoor.x = 0;
     mouseCoor.y = 0;
 }, false);*/
+
+function drawingLineArr(){
+    paintLayerCtx.clearRect(0, 0, paintLayer.width, paintLayer.height);
+    paintLayerCtx.fillStyle = 'orange';
+    paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
+    for(let i = 0; i < lineArr.length; i++){
+        lineArr[i].draw();
+    }
+    requestId = window.requestAnimationFrame(drawingLineArr);
+}
+
+drawingLineArr();
 
 function paintLayerFindMaxY(){
     let biggest = 0;
@@ -311,6 +328,7 @@ class Line{
     }
     draw(){
         this.selfDraw();
+        this.pixelArr = [];
         if(this.size % 2 == 0){
             for(let i = 0; i <= 1; i++){
                 let posNega = this.pixelSize*2;
