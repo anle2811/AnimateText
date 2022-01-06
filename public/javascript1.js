@@ -67,7 +67,7 @@ const mouseCoor = {
 let isDrawing = false;
 let penPixelSize = 5;
 
-paintLayer.addEventListener('mousedown', event =>{
+drawingArea.addEventListener('mousedown', event =>{
     isDrawing = true;
     mouseCoor.x = event.offsetX;
     mouseCoor.y = event.offsetY;
@@ -76,15 +76,15 @@ paintLayer.addEventListener('mousedown', event =>{
     newLine.draw();
 }, false);
 
-paintLayer.addEventListener('touchstart', event =>{
+/*drawingArea.addEventListener('touchstart', event =>{
     mouseCoor.x = event.touches[0].pageX;
     mouseCoor.y = event.touches[0].pageY;
     const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
     lineArr.push(newLine);
     newLine.draw();
-}, false);
+}, false);*/
 
-paintLayer.addEventListener('touchmove', event =>{
+drawingArea.addEventListener('touchmove', event =>{
     event.preventDefault();
     if(picFrameDragable){
         picFrame.style.left = (event.changedTouches[0].pageX - picFrameMouse.x) + 'px';
@@ -97,7 +97,7 @@ paintLayer.addEventListener('touchmove', event =>{
     }
 }, false);
 
-paintLayer.addEventListener('mousemove', event =>{
+drawingArea.addEventListener('mousemove', event =>{
     if(isDrawing){
         mouseCoor.x = event.offsetX;
         mouseCoor.y = event.offsetY;
@@ -110,7 +110,7 @@ paintLayer.addEventListener('mousemove', event =>{
     }
 }, false);
 
-paintLayer.addEventListener('mouseup', event =>{
+drawingArea.addEventListener('mouseup', event =>{
     isDrawing = false;
     mouseCoor.x = 0;
     mouseCoor.y = 0;
