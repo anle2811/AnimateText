@@ -75,7 +75,6 @@ paintLayer.addEventListener('mousedown', event =>{
 }, false);
 
 paintLayer.addEventListener('touchstart', event =>{
-    isDrawing = true;
     mouseCoor.x = event.touches[0].clientX;
     mouseCoor.y = event.touches[0].clientY;
     const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
@@ -84,15 +83,14 @@ paintLayer.addEventListener('touchstart', event =>{
 }, false);
 
 paintLayer.addEventListener('touchmove', event =>{
-    if(isDrawing){
+    if(picFrameDragable){
+        picFrame.style.left = (event.changedTouches[0].clientX - picFrameMouse.x) + 'px';
+    }else{
         mouseCoor.x = event.changedTouches[0].clientX;
         mouseCoor.y = event.changedTouches[0].clientY;
         const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
         lineArr.push(newLine);
         newLine.draw();
-    }
-    if(picFrameDragable){
-        picFrame.style.left = (event.changedTouches[0].clientX - picFrameMouse.x) + 'px';
     }
 }, false);
 
@@ -115,11 +113,11 @@ paintLayer.addEventListener('mouseup', event =>{
     mouseCoor.y = 0;
 }, false);
 
-paintLayer.addEventListener('touchend', e =>{
+/*paintLayer.addEventListener('touchend', e =>{
     isDrawing = false;
     mouseCoor.x = 0;
     mouseCoor.y = 0;
-}, false);
+}, false);*/
 
 function paintLayerFindMaxY(){
     let biggest = 0;
