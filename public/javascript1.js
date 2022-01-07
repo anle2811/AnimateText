@@ -38,19 +38,15 @@ let picFrameDragable = false;
 let picFrameXTouch = 0;
 picFrame.addEventListener('mousedown', e =>{
     picFrameDragable = true;
-    picFrameXTouch = picFrame.offsetLeft + e.offsetX;
-    console.log('PicFrameXTouch: '+ picFrameXTouch);
+    picFrameXTouch = e.offsetX;
 }, false);
 picFrame.addEventListener('mousemove', e =>{
     if(picFrameDragable){
-        const xChange = picFrame.offsetLeft + ((picFrame.offsetLeft + e.offsetX) - picFrameXTouch);
+        const xChange = picFrame.offsetLeft + ((picFrame.offsetLeft + e.offsetX) - (picFrame.offsetLeft + picFrameXTouch));
         picFrame.style.left = xChange + 'px';
-        console.log('PicFrame MouseMove: '+ e.offsetX);
     }
 }, false);
-picFrame.addEventListener('mouseup', e =>{
-    picFrameDragable = false;
-}, false);
+
 picFrame.addEventListener('touchmove', e =>{
     e.preventDefault();
     picFrame.style.left = (e.changedTouches[0].pageX - picFrame.width/2) + 'px';
@@ -84,6 +80,7 @@ paintLayer.addEventListener('mousemove', event =>{
 }, false);
 window.addEventListener('mouseup', event =>{
     isDrawing = false;
+    picFrameDragable = false;
     mouseCoor.x = 0;
     mouseCoor.y = 0;
 }, false);
