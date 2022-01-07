@@ -81,28 +81,30 @@ paintLayer.addEventListener('mousedown', event =>{
     lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
 }, false);
 
-paintLayer.addEventListener('touchstart', event =>{
+/*paintLayer.addEventListener('touchstart', event =>{
+    event.preventDefault();
+    event.stopPropagation();
     mouseCoor.x = event.touches[0].clientX;
     mouseCoor.y = event.touches[0].clientY;
-    /*const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
-    lineArr.push(newLine);*/
+    const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
+    lineArr.push(newLine);
     //newLine.draw();
     lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
-}, false);
+}, false);*/
 
 paintLayer.addEventListener('touchmove', event =>{
     event.preventDefault();
     event.stopPropagation();
-    if(picFrameDragable){
+   /* if(picFrameDragable){
         picFrame.style.left = (event.changedTouches[0].pageX - picFrameMouse.x) + 'px';
-    }else{
+    }else{*/
         mouseCoor.x = event.touches[0].clientX;
         mouseCoor.y = event.touches[0].clientY;
         /*const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
         lineArr.push(newLine);*/
         //newLine.draw();
         lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
-    }
+    //}
 }, false);
 
 paintLayer.addEventListener('mousemove', event =>{
