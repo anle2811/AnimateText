@@ -130,8 +130,8 @@ paintLayer.addEventListener('mouseup', event =>{
 
 function drawingLineArr(){
     paintLayerCtx.clearRect(0, 0, paintLayer.width, paintLayer.height);
-    paintLayerCtx.fillStyle = 'orange';
-    paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
+    //paintLayerCtx.fillStyle = 'orange';
+    //paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
     for(let i = 0; i < lineArr.length; i++){
         lineArr[i].draw();
     }
@@ -218,8 +218,8 @@ function paintLayerFindMinX(){
 
 function repaintToPicFrame(){
     paintLayerCtx.clearRect(0, 0, paintLayer.width, paintLayer.height);
-    paintLayerCtx.fillStyle = 'orange';
-    paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
+    //paintLayerCtx.fillStyle = 'orange';
+    //paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
     for(let a = 0; a < lineArr.length; a++){
         lineArr[a].x = lineArr[a].x - picFrame.offsetLeft;
         lineArr[a].y = lineArr[a].y - picFrame.offsetTop;
