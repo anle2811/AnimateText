@@ -75,17 +75,19 @@ paintLayer.addEventListener('mousedown', event =>{
     isDrawing = true;
     mouseCoor.x = event.offsetX;
     mouseCoor.y = event.offsetY;
-    const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
-    lineArr.push(newLine);
+    /*const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
+    lineArr.push(newLine);*/
     //newLine.draw();
+    lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
 }, false);
 
 paintLayer.addEventListener('touchstart', event =>{
     mouseCoor.x = event.touches[0].pageX;
     mouseCoor.y = event.touches[0].pageY;
-    const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
-    lineArr.push(newLine);
+    /*const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
+    lineArr.push(newLine);*/
     //newLine.draw();
+    lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
 }, false);
 
 paintLayer.addEventListener('touchmove', event =>{
@@ -96,9 +98,10 @@ paintLayer.addEventListener('touchmove', event =>{
     }else{
         mouseCoor.x = event.touches[0].pageX;
         mouseCoor.y = event.touches[0].pageY;
-        const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
-        lineArr.push(newLine);
+        /*const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
+        lineArr.push(newLine);*/
         //newLine.draw();
+        lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
     }
 }, false);
 
@@ -109,9 +112,10 @@ paintLayer.addEventListener('mousemove', event =>{
         if(isDrawing){
             mouseCoor.x = event.offsetX;
             mouseCoor.y = event.offsetY;
-            const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
-            lineArr.push(newLine);
+            /*const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
+            lineArr.push(newLine);*/
             //newLine.draw();
+            lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
         }
     }
 }, false);
@@ -130,8 +134,8 @@ paintLayer.addEventListener('mouseup', event =>{
 
 function drawingLineArr(){
     paintLayerCtx.clearRect(0, 0, paintLayer.width, paintLayer.height);
-    //paintLayerCtx.fillStyle = 'orange';
-    //paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
+    paintLayerCtx.fillStyle = 'orange';
+    paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
     for(let i = 0; i < lineArr.length; i++){
         lineArr[i].draw();
     }
@@ -287,6 +291,20 @@ function pullRightPlace(){
             }
         }
         biggest += 1;
+    }
+}
+
+class Circle{
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+    }
+    draw(){
+        paintLayerCtx.fillStyle = 'pink';
+        paintLayerCtx.beginPath();
+        paintLayerCtx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+        paintLayerCtx.fill();
+        paintLayerCtx.closePath();
     }
 }
 
