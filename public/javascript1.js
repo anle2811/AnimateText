@@ -10,7 +10,6 @@ drawingArea.height = window.innerHeight/4;
 drawingArea.style.top = (window.innerHeight/4 + drawingArea.height/2)+'px';
 drawingArea.style.position = 'absolute';
 
-
 const paintLayer = document.getElementById('paintLayer');
 const paintLayerCtx = paintLayer.getContext('2d');
 paintLayer.width = drawingArea.width;
@@ -29,39 +28,34 @@ const doneBtn = document.getElementById('paintDone');
 doneBtn.style.top = (window.innerHeight/4 + paintLayer.height + paintLayer.height/2)+'px';
 doneBtn.style.position = 'absolute';
 
-var requestId;
 function paintDone(){
-    //pullRightPlace();
-    //paintLayer.style.top = '100px';
-    window.cancelAnimationFrame(requestId);
-    requestId = undefined;
     drawPicFrame();
     repaintToPicFrame();
     picFrame.style.top = (paintLayer.height - picFrame.height) + 'px';
 }
+
 let picFrameDragable = false;
-let picFrameMouse = {
-    x: 0,
-    y: 0
-};
+let picFrameXTouch = 0;
 picFrame.addEventListener('mousedown', e =>{
     picFrameDragable = true;
-    picFrameMouse.x = e.offsetX;
-    picFrameMouse.y = e.offsetY;
+    picFrameXTouch = picFrame.offsetLeft + e.offsetX;
+    console.log('PicFrameXTouch: '+ picFrameXTouch);
 }, false);
-picFrame.addEventListener('touchstart', e =>{
-    picFrameDragable = true;
-    picFrameMouse.x = e.touches[0].clientX;
-    picFrameMouse.y = e.touches[0].clientY;
-    e.preventDefault();
-}, false);
-picFrame.addEventListener('touchend', e =>{
-    picFrameDragable = false;
-    e.preventDefault();
+picFrame.addEventListener('mousemove', e =>{
+    if(picFrameDragable){
+        const xChange = picFrame.offsetLeft + ((picFrame.offsetLeft + e.offsetX) - picFrameXTouch);
+        picFrame.style.left = xChange + 'px';
+        console.log('PicFrame MouseMove: '+ e.offsetX);
+    }
 }, false);
 picFrame.addEventListener('mouseup', e =>{
     picFrameDragable = false;
 }, false);
+picFrame.addEventListener('touchmove', e =>{
+    e.preventDefault();
+    picFrame.style.left = (e.changedTouches[0].pageX - picFrame.width/2) + 'px';
+}, false);
+
 
 let lineArr = [];
 const mouseCoor = {
@@ -75,76 +69,46 @@ paintLayer.addEventListener('mousedown', event =>{
     isDrawing = true;
     mouseCoor.x = event.offsetX;
     mouseCoor.y = event.offsetY;
-    /*const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
-    lineArr.push(newLine);*/
-    //newLine.draw();
-    lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
-}, false);
-
-/*paintLayer.addEventListener('touchstart', event =>{
-    event.preventDefault();
-    event.stopPropagation();
-    mouseCoor.x = event.touches[0].clientX;
-    mouseCoor.y = event.touches[0].clientY;
     const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
     lineArr.push(newLine);
-    //newLine.draw();
-    lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
-}, false);*/
-
+    newLine.draw();
+}, false);
+paintLayer.addEventListener('mousemove', event =>{
+    if(isDrawing){
+        mouseCoor.x = event.offsetX;
+        mouseCoor.y = event.offsetY;
+        const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
+        lineArr.push(newLine);
+        newLine.draw();
+    }
+}, false);
+window.addEventListener('mouseup', event =>{
+    isDrawing = false;
+    mouseCoor.x = 0;
+    mouseCoor.y = 0;
+}, false);
+/////
+paintLayer.addEventListener('touchstart', event =>{
+    event.preventDefault();
+    mouseCoor.x = event.touches[0].clientX;
+    mouseCoor.y = event.touches[0].clientY - drawingArea.offsetTop;
+    const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
+    lineArr.push(newLine);
+    newLine.draw();
+}, false);
 paintLayer.addEventListener('touchmove', event =>{
     event.preventDefault();
-    event.stopPropagation();
-   /* if(picFrameDragable){
-        picFrame.style.left = (event.changedTouches[0].pageX - picFrameMouse.x) + 'px';
-    }else{*/
-        mouseCoor.x = event.touches[0].clientX;
-        mouseCoor.y = event.touches[0].clientY;
-        /*const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
-        lineArr.push(newLine);*/
-        //newLine.draw();
-        lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
-    //}
+    mouseCoor.x = event.touches[0].clientX ;
+    mouseCoor.y = event.touches[0].clientY - drawingArea.offsetTop;
+    const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
+    lineArr.push(newLine);
+    newLine.draw();
 }, false);
-
-paintLayer.addEventListener('mousemove', event =>{
-    if(picFrameDragable){
-        picFrame.style.left = (event.offsetX - picFrameMouse.x) + 'px';
-    }else{
-        if(isDrawing){
-            mouseCoor.x = event.offsetX;
-            mouseCoor.y = event.offsetY;
-            /*const newLine = new Line(mouseCoor.x, mouseCoor.y, penPixelSize, 3, paintLayerCtx);
-            lineArr.push(newLine);*/
-            //newLine.draw();
-            lineArr.push(new Circle(mouseCoor.x, mouseCoor.y));
-        }
-    }
-}, false);
-
-paintLayer.addEventListener('mouseup', event =>{
+paintLayer.addEventListener('touchend', e =>{
     isDrawing = false;
     mouseCoor.x = 0;
     mouseCoor.y = 0;
 }, false);
-
-/*paintLayer.addEventListener('touchend', e =>{
-    isDrawing = false;
-    mouseCoor.x = 0;
-    mouseCoor.y = 0;
-}, false);*/
-
-function drawingLineArr(){
-    paintLayerCtx.clearRect(0, 0, paintLayer.width, paintLayer.height);
-    paintLayerCtx.fillStyle = 'orange';
-    paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
-    for(let i = 0; i < lineArr.length; i++){
-        lineArr[i].draw();
-    }
-    requestId = window.requestAnimationFrame(drawingLineArr);
-}
-
-drawingLineArr();
 
 function paintLayerFindMaxY(){
     let biggest = 0;
@@ -224,8 +188,8 @@ function paintLayerFindMinX(){
 
 function repaintToPicFrame(){
     paintLayerCtx.clearRect(0, 0, paintLayer.width, paintLayer.height);
-    //paintLayerCtx.fillStyle = 'orange';
-    //paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
+    paintLayerCtx.fillStyle = 'orange';
+    paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
     for(let a = 0; a < lineArr.length; a++){
         lineArr[a].x = lineArr[a].x - picFrame.offsetLeft;
         lineArr[a].y = lineArr[a].y - picFrame.offsetTop;
@@ -241,7 +205,6 @@ function repaintToPicFrame(){
 }
 
 function drawPicFrame(){
-    console.log(lineArr);
     const x = paintLayerFindMinX() - penPixelSize;
     const y = paintLayerFindMinY() - penPixelSize;
     const width = paintLayerFindMaxX() - x + penPixelSize;
@@ -252,7 +215,6 @@ function drawPicFrame(){
     picFrame.style.border = 'thin solid #0000FF'
     picFrame.style.top = y + 'px';
     picFrame.style.left = x + 'px';
-    console.log('X: '+ picFrame.offsetTop + ' Y: '+ picFrame.offsetLeft);
 }
 
 function pullRightPlace(){
@@ -296,6 +258,7 @@ function pullRightPlace(){
     }
 }
 
+//{For Testing
 class Circle{
     constructor(x, y){
         this.x = x;
@@ -308,7 +271,7 @@ class Circle{
         paintLayerCtx.fill();
         paintLayerCtx.closePath();
     }
-}
+} //}
 
 class LinePixel{
     constructor(x, y, size, ctx){
