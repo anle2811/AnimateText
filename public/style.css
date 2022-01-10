@@ -13,6 +13,27 @@ html, body {
     box-sizing: border-box;
 }
 
+.directBtn{
+    background: white; 
+    border: 1px solid cyan; 
+    border-radius: 50%; 
+    display: inline-flex; 
+    height: 100%; 
+    position: relative;
+}
+table, tr{
+    white-space: nowrap;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+.shotBtn{
+    border: 1px solid snow; 
+    border-radius: 50%; 
+    background: orangered;
+    color: snow;
+}
+
 
 
 /*#eyes {

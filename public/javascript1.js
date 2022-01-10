@@ -1,8 +1,8 @@
 const canvas = document.getElementById('mainLayer');
 const context = canvas.getContext('2d');
-canvas.width = window.innerWidth;
+/*canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-canvas.style.position = 'absolute';
+canvas.style.position = 'absolute';*/
 
 const drawingArea = document.getElementById('drawingArea');
 drawingArea.width = window.innerWidth;
@@ -28,11 +28,30 @@ const doneBtn = document.getElementById('paintDone');
 doneBtn.style.top = (window.innerHeight/4 + paintLayer.height + paintLayer.height/2)+'px';
 doneBtn.style.position = 'absolute';
 
+let firePicFrame = false;
+let picFrameTop = -(drawingArea.offsetTop * 2);
 function paintDone(){
-    drawPicFrame();
-    repaintToPicFrame();
-    picFrame.style.top = (paintLayer.height - picFrame.height) + 'px';
+    if(firePicFrame){
+        picFrameTop = picFrame.offsetTop;
+        firePicFrame = false;
+    }else{
+        drawPicFrame();
+        repaintToPicFrame();
+        picFrame.style.top = (paintLayer.height - picFrame.height) + 'px';
+        doneBtn.innerText = 'FIRE';
+        firePicFrame = true;
+    }
 }
+
+function firePic(){
+    if(picFrameTop > drawingArea.offsetTop * -1){
+        picFrame.style.top = picFrameTop + 'px';
+        picFrameTop -= 2;
+    }
+    requestAnimationFrame(firePic);
+}
+
+firePic();
 
 let picFrameDragable = false;
 let picFrameXTouch = 0;
