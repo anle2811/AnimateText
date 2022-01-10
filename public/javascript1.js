@@ -366,6 +366,75 @@ class Line{
 
 }
 
+const moveUpBtn = document.getElementById('moveUp');
+const moveLeftBtn = document.getElementById('moveLeft');
+const moveRightBtn = document.getElementById('moveRight');
+const moveDownBtn = document.getElementById('moveDown');
+let timer;
+const holdDur = 400;
+let isHold = false;
+let playerDirs = {
+    up: 'up',
+    left: 'left',
+    right: 'right',
+    down: 'down',
+    none: 'none'
+};
+let playerDir = playerDirs.none;
+moveUpBtn.addEventListener('touchstart', e=>{
+    e.preventDefault();
+    timer = setTimeout(function(){
+        playerDir = playerDirs.up;
+        isHold = true;
+    }, holdDur);
+}, false);
+moveUpBtn.addEventListener('touchend', e=>{
+    endHoldDir(playerDirs.none, moveUp);
+}, false);
+////
+moveLeftBtn.addEventListener('touchstart', e=>{
+    e.preventDefault();
+    timer = setTimeout(function(){
+        playerDir = playerDirs.left;
+        isHold = true;
+    }, holdDur);
+}, false);
+moveLeftBtn.addEventListener('touchend', e=>{
+    endHoldDir(playerDirs.none, moveLeft);
+}, false);
+////
+moveRightBtn.addEventListener('touchstart', e=>{
+    e.preventDefault();
+    timer = setTimeout(function(){
+        playerDir = playerDirs.right;
+        isHold = true;
+    }, holdDur);
+}, false);
+moveRightBtn.addEventListener('touchend', e=>{
+    endHoldDir(playerDirs.none, moveRight);
+}, false);
+////
+moveDownBtn.addEventListener('touchstart', e=>{
+    e.preventDefault();
+    timer = setTimeout(function(){
+        playerDir = playerDirs.down;
+        isHold = true;
+    }, holdDur);
+}, false);
+moveDownBtn.addEventListener('touchend', e=>{
+    endHoldDir(playerDirs.none, moveDown);
+}, false);
+
+function endHoldDir(dir, moveDir){
+    if(isHold){
+        playerDir = dir;
+    }else{
+        moveDir();
+    }
+    isHold = false;
+    clearTimeout(timer);
+}
+
 class Player{
     constructor(x, y, size, color){
         this.x = x;
@@ -407,6 +476,21 @@ function moveDown(){
 }
 
 function drawPlayer(){
+    switch(playerDir){
+        case playerDirs.up:
+            playerMove(0, -2, prePlayerPos.x, prePlayerPos.y);
+            break;
+        case playerDirs.left:
+            playerMove(-2, 0, prePlayerPos.x, prePlayerPos.y);
+            break;
+        case playerDirs.right:
+            playerMove(2, 0, prePlayerPos.x, prePlayerPos.y);
+            break;
+        case playerDirs.down:
+            playerMove(0, 2, prePlayerPos.x, prePlayerPos.y);
+            break;    
+        default: break;
+    }
     player1.draw();
     prePlayerPos.x = player1.x;
     prePlayerPos.y = player1.y;
