@@ -1,8 +1,11 @@
 const canvas = document.getElementById('mainLayer');
 const context = canvas.getContext('2d');
-/*canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-canvas.style.position = 'absolute';*/
+const mainDiv = document.getElementById('mainDiv');
+canvas.width = mainDiv.clientWidth;
+canvas.height = mainDiv.clientHeight;
+//canvas.style.position = 'absolute';
+context.fillStyle = 'snow';
+context.fillRect(0, 0, canvas.width, canvas.height);
 
 const drawingArea = document.getElementById('drawingArea');
 drawingArea.width = window.innerWidth;
@@ -373,14 +376,44 @@ class Player{
 
     draw(){
         context.fillStyle = this.color;
-        context.beginPath();
-        context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        context.closePath();
-        context.fill();
+        context.fillRect(this.x, this.y, this.size, this.size);
     }
 }
-const player1 = new Player(canvas.width/2, canvas.height/2, 20, 'red');
+const player1 = new Player(canvas.width/2 - 25, canvas.height - 50, 50, 'red');
 
+function playerMove(x, y, preX, preY){
+    player1.x += x;
+    player1.y += y;
+    context.clearRect(preX, preY, 50, 50);
+    context.fillStyle = 'snow';
+    context.fillRect(preX, preY, 50, 50);
+}
+
+const prePlayerPos = {
+    x: canvas.width/2 - 25,
+    y: canvas.height - 50
+};
+function moveUp(){
+    playerMove(0, -10, prePlayerPos.x, prePlayerPos.y);
+}
+function moveLeft(){
+    playerMove(-10, 0, prePlayerPos.x, prePlayerPos.y);
+}
+function moveRight(){
+    playerMove(10, 0, prePlayerPos.x, prePlayerPos.y);
+}
+function moveDown(){
+    playerMove(0, 10, prePlayerPos.x, prePlayerPos.y);
+}
+
+function drawPlayer(){
+    player1.draw();
+    prePlayerPos.x = player1.x;
+    prePlayerPos.y = player1.y;
+    requestAnimationFrame(drawPlayer);
+}
+
+drawPlayer();
 
 class Bullet{
     constructor(x, y, velocityX, velocityY, speed, type){

@@ -8,15 +8,15 @@
     </head>
     <body>
         <div style="z-index: 0; height: 100%;">
-            <div style="height: 85%;">
+            <div id="mainDiv" style="height: 85%;">
                 <canvas id="mainLayer"></canvas>
             </div>
-            <div style="display: flex; width: 100%; height: 15%;">
+            <div style="display: flex; width: 100%; height: 15%; background: tan; padding: 5px 0px 5px 0px;">
                 <div style="width: 50%; display: flex; justify-content: center; align-items: center;">
                     <table style="height: 100%; width: 100%;">
                         <tr>
                             <td colspan="3" style="text-align: center;">
-                                <button class="directBtn" id="moveUp">
+                                <button class="directBtn" id="moveUp" onclick="moveUp()">
                                     <img src="./public/images/transparent1-1.png" style="height: 100%; width: auto;">
                                     <p style="color: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">W</p>
                                 </button>
@@ -24,7 +24,7 @@
                         </tr>
                         <tr>
                             <td style="text-align: right; padding-left: 20px;">
-                                <button class="directBtn" id="moveLeft">
+                                <button class="directBtn" id="moveLeft" onclick="moveLeft()">
                                     <img src="./public/images/transparent1-1.png" style="height: 100%; width: auto;">
                                     <p style="color: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">A</p>
                                 </button>
@@ -33,7 +33,7 @@
                                 <button class="shotBtn" style="width: 80%; height: 80%;" id="attack">SHOT</button>
                             </td>
                             <td style="text-align: left; padding-right: 20px;">
-                                <button class="directBtn" id="moveRight">
+                                <button class="directBtn" id="moveRight" onclick="moveRight()">
                                     <img src="./public/images/transparent1-1.png" style="height: 100%; width: auto;">
                                     <p style="color: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">D</p>
                                 </button>
@@ -41,7 +41,7 @@
                         </tr>
                         <tr>
                             <td colspan="3" style="text-align: center;">
-                                <button class="directBtn" id="moveDown">
+                                <button class="directBtn" id="moveDown" onclick="moveDown()">
                                     <img src="./public/images/transparent1-1.png" style="height: 100%; width: auto;">
                                     <p style="color: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">S</p>
                                 </button>
