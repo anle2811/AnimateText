@@ -17,9 +17,8 @@ const paintLayer = document.getElementById('paintLayer');
 const paintLayerCtx = paintLayer.getContext('2d');
 paintLayer.width = drawingArea.width;
 paintLayer.height = drawingArea.height;
+paintLayer.style.border = 'thin solid cyan';
 paintLayer.style.position = 'absolute';
-paintLayerCtx.fillStyle = 'orange';
-paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
 
 const picFrame = document.getElementById('picFrame');
 const picFrameCtx = picFrame.getContext('2d');
@@ -48,6 +47,7 @@ function paintDone(){
 
 function firePic(){
     if(picFrameTop > drawingArea.offsetTop * -1){
+        picFrame.style.border = 'none';
         picFrame.style.top = picFrameTop + 'px';
         picFrameTop -= 2;
     }
@@ -207,8 +207,6 @@ function paintLayerFindMinX(){
 
 function repaintToPicFrame(){
     paintLayerCtx.clearRect(0, 0, paintLayer.width, paintLayer.height);
-    paintLayerCtx.fillStyle = 'orange';
-    paintLayerCtx.fillRect(0, 0, paintLayer.width, paintLayer.height);
     for(let a = 0; a < lineArr.length; a++){
         lineArr[a].x = lineArr[a].x - picFrame.offsetLeft;
         lineArr[a].y = lineArr[a].y - picFrame.offsetTop;
@@ -231,7 +229,7 @@ function drawPicFrame(){
 
     picFrame.width = width;
     picFrame.height = height;
-    picFrame.style.border = 'thin solid #0000FF'
+    picFrame.style.border = 'thin solid yellow'
     picFrame.style.top = y + 'px';
     picFrame.style.left = x + 'px';
 }
@@ -510,9 +508,9 @@ class Bullet{
     }
 
     draw(){
-        context.fillStyle = 'white';
-        context.beginPath();
-        switch(this.type){
+        context.fillStyle = 'pink';
+        context.fillRect(this.x, this.y, 10, 10);
+        /*switch(this.type){
             case '5bl':
                 context.strokeStyle = 'red';
                 context.lineWidth = 10;
@@ -524,8 +522,7 @@ class Bullet{
                 break;
             default: context.arc(this.x, this.y, 5, 0, Math.PI * 2);
                 break;
-        }
-        context.closePath();
+        }*/
         //context.fill();
     }
     
@@ -539,13 +536,17 @@ class Bullet{
 let bulletArr = [];
 
 function addBulletLine(x, y){
-    const angle = Math.atan2(y - canvas.height/2, x - canvas.width/2);
+    const angle = Math.atan2(y - player1.y, x - player1.x);
     const bx = Math.cos(angle);
     const by = Math.sin(angle);
-    bulletArr.push(new Bullet(player1.x, player1.y, bx, by, 3, '5bl'));
+    bulletArr.push(new Bullet(player1.x + 20, player1.y, bx, by, 3, '5b'));
 }
 
-function shotting(){   
+function shoot(){
+    addBulletLine(player1.x, player1.y - 20);
+}
+
+function shooting(){   
     context.fillStyle = 'rgba(0,0,0,.05)';
     context.fillRect(0, 0, window.innerWidth, window.innerHeight);
     //context.clearRect(0, 0, window.innerWidth, window.innerHeight);
@@ -553,12 +554,12 @@ function shotting(){
     bulletArr.forEach((bullet) => {
         bullet.update();
     })
-    requestAnimationFrame(shotting);
+    requestAnimationFrame(shooting);
 }
 
 /*addEventListener('click', function(event){
     addBulletLine(event.clientX, event.clientY);
-});
+});*/
 
-shotting();*/
+shooting();
 
