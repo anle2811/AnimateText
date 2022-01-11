@@ -13,29 +13,57 @@ html, body {
     padding: 0;
     box-sizing: border-box;
 }
-
-.directBtn{
-    background: white; 
-    border: 1px solid cyan; 
-    border-radius: 50%; 
-    display: inline-flex; 
-    height: 100%; 
-    position: relative;
-}
 table, tr{
     white-space: nowrap;
     border-collapse: collapse;
     border-spacing: 0px;
 }
 
-.shotBtn{
-    border: 1px solid snow; 
-    border-radius: 50%; 
-    background: orangered;
-    color: snow;
+.directBtn{
+    height: 95%; 
+    width: 95%;
+    border: none;
+    border-radius: 8%;
 }
 
+.shotBtn{
+    height: 80%; 
+    width: 80%;
+    border: none;
+    border-radius: 8%;
+    padding: 10px 5px 10px 5px;
+    background: url('./images/shooting-star.png') no-repeat, #336b87;
+    background-size: contain; 
+    background-position: center;
+    background-origin: content-box;
+}
 
+#moveLeft{
+    padding: 15px 0 15px 0;
+    background: url('./images/triangleleft.png') no-repeat, #2a3132;
+    background-size: contain; 
+    background-position: center;
+    background-origin: content-box;
+}
+#moveRight{
+    padding: 15px 0 15px 0;
+    background: url('./images/triangleright.png') no-repeat, #2a3132;
+    background-size: contain; 
+    background-position: center;
+    background-origin: content-box;
+}
+#moveUp, #moveUp1{
+    background: url('./images/triangleup.png') no-repeat, #2a3132; 
+    background-size: contain; 
+    background-position: center;
+    background-origin: content-box;
+}
+#moveDown, #moveDown1{
+    background: url('./images/triangledown.png') no-repeat, #2a3132;
+    background-size: contain; 
+    background-position: center;
+    background-origin: content-box;
+}
 
 /*#eyes {
     position: relative;

@@ -11,47 +11,48 @@
             <div id="mainDiv" style="height: 85%;">
                 <canvas id="mainLayer"></canvas>
             </div>
-            <div style="display: flex; width: 100%; height: 15%; background: tan; padding: 5px 0px 5px 0px;">
-                <div style="width: 50%; display: flex; justify-content: center; align-items: center;">
-                    <table style="height: 100%; width: 100%;">
-                        <tr>
-                            <td colspan="3" style="text-align: center;">
-                                <button class="directBtn" id="moveUp">
-                                    <img src="./public/images/transparent1-1.png" style="height: 100%; width: auto;">
-                                    <p style="color: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">W</p>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: right; padding-left: 20px;">
-                                <button class="directBtn" id="moveLeft">
-                                    <img src="./public/images/transparent1-1.png" style="height: 100%; width: auto;">
-                                    <p style="color: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">A</p>
-                                </button>
-                            </td>
-                            <td style="text-align: center;">
-                                <button class="shotBtn" style="width: 80%; height: 80%;" id="attack" onclick="shoot()">SHOT</button>
-                            </td>
-                            <td style="text-align: left; padding-right: 20px;">
-                                <button class="directBtn" id="moveRight">
-                                    <img src="./public/images/transparent1-1.png" style="height: 100%; width: auto;">
-                                    <p style="color: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">D</p>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" style="text-align: center;">
-                                <button class="directBtn" id="moveDown">
-                                    <img src="./public/images/transparent1-1.png" style="height: 100%; width: auto;">
-                                    <p style="color: red; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">S</p>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div style="width: 50%; text-align: center; display: flex; justify-content: center; align-items: center;">
-                    <button class="shotBtn" style="width: 40%; height: 40%;" id="attact1" onclick="shoot()">SHOT</button>
-                </div>
+            <div style="width: 100%; height: 15%; background: #90afc5; padding: 5px 0px 5px 0px;">     
+                <table style="height: 100%; width: 100%;">
+                    <tr>
+                        <td rowspan="2" style="text-align: center;">
+                            <button class="directBtn" id="moveLeft">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            </button>
+                        </td>
+                        <td style="text-align: center;">
+                            <button class="directBtn" id="moveUp">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            </button>
+                        </td>
+                        <td rowspan="2" style="text-align: center;">
+                            <button class="shotBtn" id="attack" onclick="shoot()">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            </button>
+                        </td>
+                        <td style="text-align: center;">
+                            <button class="directBtn" id="moveUp1">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            </button>
+                        </td>
+                        <td rowspan="2" style="text-align: center;">
+                            <button class="directBtn" id="moveRight">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">
+                            <button class="directBtn" id="moveDown">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            </button>
+                        </td>
+                        <td style="text-align: center;">
+                            <button class="directBtn" id="moveDown1">
+                                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div id="drawingArea" style="z-index: 1; display: block;">

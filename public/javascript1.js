@@ -365,9 +365,11 @@ class Line{
 }
 
 const moveUpBtn = document.getElementById('moveUp');
+const moveUpBtn1 = document.getElementById('moveUp1');
 const moveLeftBtn = document.getElementById('moveLeft');
 const moveRightBtn = document.getElementById('moveRight');
 const moveDownBtn = document.getElementById('moveDown');
+const moveDownBtn1 = document.getElementById('moveDown1');
 let timer;
 const holdDur = 400;
 let isHold = false;
@@ -387,6 +389,16 @@ moveUpBtn.addEventListener('touchstart', e=>{
     }, holdDur);
 }, false);
 moveUpBtn.addEventListener('touchend', e=>{
+    endHoldDir(playerDirs.none, moveUp);
+}, false);
+moveUpBtn1.addEventListener('touchstart', e=>{
+    e.preventDefault();
+    timer = setTimeout(function(){
+        playerDir = playerDirs.up;
+        isHold = true;
+    }, holdDur);
+}, false);
+moveUpBtn1.addEventListener('touchend', e=>{
     endHoldDir(playerDirs.none, moveUp);
 }, false);
 ////
@@ -420,6 +432,16 @@ moveDownBtn.addEventListener('touchstart', e=>{
     }, holdDur);
 }, false);
 moveDownBtn.addEventListener('touchend', e=>{
+    endHoldDir(playerDirs.none, moveDown);
+}, false);
+moveDownBtn1.addEventListener('touchstart', e=>{
+    e.preventDefault();
+    timer = setTimeout(function(){
+        playerDir = playerDirs.down;
+        isHold = true;
+    }, holdDur);
+}, false);
+moveDownBtn1.addEventListener('touchend', e=>{
     endHoldDir(playerDirs.none, moveDown);
 }, false);
 
